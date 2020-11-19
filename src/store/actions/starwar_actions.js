@@ -6,9 +6,14 @@ export const SET_FILMS = 'SET_FILMS'
 export const SET_CURRENT_PERSON = 'SET_CURRENT_PERSON'
 
 export const loadPage = (pageUrl) => {
-  return {
-    type: LOAD_PAGE,
-    payload: { currentPageUrl: pageUrl },
+  return (dispatch) => {
+    fetch(`${pageUrl}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        dispatch(setPeople(data.results))
+        dispatch(updatePaginator(data.previous, data.next))
+      })
   }
 }
 
@@ -47,7 +52,6 @@ export const loadFilms = (filmUrls) => {
     Promise.all(promises)
       .then((responses) => Promise.all(responses.map((r) => r.json())))
       .then((data) => {
-        console.log(data)
         dispatch(setFilms(data))
       })
   }

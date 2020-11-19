@@ -6,17 +6,8 @@ const PeopleList = (props) => {
 
 
   useEffect(() => {
-
-    fetch(`${props.currentPageUrl}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        props.onSetPeople(data.results)
-        props.onUpdatePaginator(data.previous, data.next)
-
-      })
-
-  }, [props.currentPageUrl])
+    props.onLoadPage(props.currentPageUrl)
+  }, [])
 
   return (
     <div>
