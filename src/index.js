@@ -3,12 +3,34 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore } from "redux";
-import reducer from "./store/reducer";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import starWarReducer from "./store/reducers/stawar_reducer";
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+
+const rootReducer = combineReducers({
+  starWar: starWarReducer
+})
+
+// const logger = store => {
+//   return next => {
+//     return action => {
+//       console.log('[Middleware] Dispatching', action);
+//       const result = next(action);
+//       console.log('[Middleware] next state', store.getState());
+//       return result;
+//     }
+//   }
+// };
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+)
 
 
-const store = createStore(reducer)
 
 ReactDOM.render(
   <React.StrictMode>

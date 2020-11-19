@@ -6,7 +6,7 @@
   width: 80%;
   margin: 10px auto;
   text-align: left;
-
+  border-spacing: 0
 }
 .list td, .list th {
   border: 1px solid black;
@@ -23,3 +23,16 @@
 .paginator button {
   margin: 10px 10px;
 }
+
+.detail {
+  width: 80%;
+  margin: 10px auto;
+  text-align: left;
+}
+.detail .label {
+  margin-right: 20px;
+}
+.film-list li {
+  margin: 10px 10px
+}
+

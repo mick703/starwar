@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from 'react-redux'
-
+import * as starWarActions from '../store/actions/starwar_actions'
 
 const PeopleList = (props) => {
 
@@ -20,7 +20,7 @@ const PeopleList = (props) => {
 
   return (
     <div>
-      <h1>Table with list of people</h1>
+      <h2>Table with list of people</h2>
       <table className='list'>
         <thead>
           <tr>
@@ -31,7 +31,10 @@ const PeopleList = (props) => {
         </thead>
         <tbody>
           {props.people.map((person) =>
-            (<tr key={person.name} >
+            (<tr key={person.name} onClick={() => {
+              props.onSelectPerson(person)
+              props.onLoadFilms(person.films)
+            }}>
               <td>{person.name}</td>
               <td>{person.height}</td>
               <td>{person.mass}</td>
@@ -51,19 +54,21 @@ const PeopleList = (props) => {
 const mapStateToProps = state => {
   console.log(state)
   return {
-    currentPageUrl: state.currentPageUrl,
-    people: state.people,
-    backPageUrl: state.backPageUrl,
-    nextPageUrl: state.nextPageUrl
+    currentPageUrl: state.starWar.currentPageUrl,
+    people: state.starWar.people,
+    backPageUrl: state.starWar.backPageUrl,
+    nextPageUrl: state.starWar.nextPageUrl
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLoadPage: (pageUrl) => dispatch({ type: 'LOAD_PAGE', payload: { currentPageUrl: pageUrl } }),
-    onSetPeople: (people) => dispatch({ type: 'SET_PEOPLE', payload: { people: people } }),
+    onLoadPage: (pageUrl) => dispatch(starWarActions.loadPage(pageUrl)),
+    onSetPeople: (people) => dispatch(starWarActions.setPeople(people)),
     onUpdatePaginator: (backPageUrl, nextPageUrl) => dispatch(
-      { type: 'UPDATE_PAGINATOR', payload: { backPageUrl: backPageUrl, nextPageUrl: nextPageUrl } }),
+      starWarActions.updatePaginator(backPageUrl, nextPageUrl)),
+    onSelectPerson: (person) => dispatch(starWarActions.setCurrentPerson(person)),
+    onLoadFilms: (filmUrls) => dispatch(starWarActions.loadFilms(filmUrls))
 
   }
 }
