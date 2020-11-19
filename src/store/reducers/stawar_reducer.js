@@ -3,9 +3,9 @@ import * as starWarActions from '../actions/starwar_actions'
 const initalState = {
   people: [],
   currentPerson: null,
-  currentPageUrl: 'http://swapi.dev/api/people/',
+  currentPageUrl: 'https://swapi.dev/api/people/',
   backPageUrl: null,
-  nextPageUrl: 'http://swapi.dev/api/people/?page=2',
+  nextPageUrl: 'https://swapi.dev/api/people/?page=2',
   currentFilmList: []
 }
 

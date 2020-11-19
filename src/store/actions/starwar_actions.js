@@ -7,7 +7,8 @@ export const SET_CURRENT_PERSON = 'SET_CURRENT_PERSON'
 
 export const loadPage = (pageUrl) => {
   return (dispatch) => {
-    fetch(`${pageUrl}`)
+    const httpsUrl = pageUrl.replace('http://', 'https://')
+    fetch(`${httpsUrl}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
@@ -47,7 +48,9 @@ export const setFilms = (films) => {
 export const loadFilms = (filmUrls) => {
   return (dispatch) => {
     const promises = filmUrls.map((url) => {
-      return fetch(url).catch((e) => console.error(e))
+      // The original url has http which causes browser to panic,
+      const httpsUrl = url.replace('http://', 'https://')
+      return fetch(httpsUrl).catch((e) => console.error(e))
     })
     Promise.all(promises)
       .then((responses) => Promise.all(responses.map((r) => r.json())))
